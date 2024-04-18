@@ -1,11 +1,12 @@
 const puppeteer = require("puppeteer");
-const { keyboard, Key } = require("@nut-tree/nut-js");
-
+let browser = {
+  close: () => {return "No Browser Instance Running"},
+};
 const startPuppeteerFunction = async (req, res) => {
   const { url, meetingId, passcode, name } = req.body;
   const meetId = meetingId.trim();
   const meetPassCode = passcode.trim();
-  const browser = await puppeteer.launch({
+  browser = await puppeteer.launch({
     headless: false,
     args: [
       "--disable-notifications",
@@ -21,24 +22,45 @@ const startPuppeteerFunction = async (req, res) => {
       height: 720,
     },
   });
-  const page  = await browser.newPage();
+  const page = await browser.newPage();
   const ua =
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36";
   await page.setUserAgent(ua);
   await page.goto(url);
-  await keyboard.pressKey(Key.LeftControl, Key.M);
-  await keyboard.releaseKey(Key.LeftControl);
-  console.log("Started")
-  setInterval(async()=>{
+  //   await keyboard.pressKey(Key.LeftControl, Key.M);
+  //   await keyboard.releaseKey(Key.LeftControl);
+  //   await page.keyboard.down("ControlLeft");
+  //   await page.keyboard.press("KeyM");
+  // await page.keyboard.down("KeyY")
+  //   await page.keyboard.down("ControlLeft");
+  // Focus on the page or a specific element if needed
+  await page.focus("body");
+
+  // Press Ctrl+M
+  await page.keyboard.down("ControlLeft"); // Hold down the Control key
+  await page.keyboard.press("KeyM"); // Press the M key
+  await page.keyboard.up("ControlLeft"); // Release the Control key
+  console.log("Started");
+  setInterval(async () => {
     const recorder = await page.screenshot({
-      encoding: 'base64'
+      path: "screenshot.jpg",
     });
-    console.log("============================= Recorded Page =============================");
-    console.log(recorder);
-  }, [1000/60])
+    console.log(
+      "============================= Recorded Page ============================="
+    );
+    // console.log(recorder);
+  }, [1000 / 60]);
   res.send({
-    message: "Successful"
-  })
+    message: "Successful",
+  });
 };
 
-module.exports = { startPuppeteerFunction };
+const deletePuppeteerFunction = async (req, res) => {
+    console.log(browser);
+    browser.close();
+  res.send({
+    message: "Browser Closed",
+  });
+};
+
+module.exports = { startPuppeteerFunction, deletePuppeteerFunction };

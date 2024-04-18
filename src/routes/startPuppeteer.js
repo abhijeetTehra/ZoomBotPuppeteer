@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const { startPuppeteerController } = require("../controllers/startPuppeteer");
-const { startPuppeteerFunction } = require("../utils/startPuppeteer");
+const { startPuppeteerController, deletePuppeteerController } = require("../controllers/startPuppeteer");
+const { startPuppeteerFunction, deletePuppeteerFunction } = require("../utils/startPuppeteer");
 
 router.post("/start", startPuppeteerController, startPuppeteerFunction);
+router.delete("/delete", deletePuppeteerController, deletePuppeteerFunction);
 
 module.exports = router;
