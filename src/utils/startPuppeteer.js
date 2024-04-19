@@ -5,6 +5,9 @@ let browser = {
 		return "No Browser Instance Running";
 	},
 };
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({ port: 8080 });
 
 const startPuppeteerFunction = async (req, res) => {
 	const executablePath =
@@ -15,7 +18,7 @@ const startPuppeteerFunction = async (req, res) => {
 	const meetPassCode = passcode.trim();
 	browser = await puppeteer.launch({
 		executablePath,
-		headless: false,
+		headless: true,
 		args: [
 			"--disable-notifications",
 			"--enable-automation",
@@ -49,15 +52,24 @@ const startPuppeteerFunction = async (req, res) => {
 	await page.keyboard.press("KeyM"); // Press the M key
 	await page.keyboard.up("ControlLeft"); // Release the Control key
 	console.log("Started");
-	setInterval(async () => {
-		const recorder = await page.screenshot({
-			path: "screenshot.jpg",
-		});
-		console.log(
-			"============================= Recorded Page ============================="
-		);
-		// console.log(recorder);
-	}, [1000 / 60]);
+	// setInterval(async () => {
+	// 	const recorder = await page.screenshot({
+	// 		path: "screenshot.jpg",
+	// 	});
+	// 	console.log(
+	// 		"============================= Recorded Page ============================="
+	// 	);
+	// 	// console.log(recorder);
+	// }, [1000 / 60]);
+  const time = parseInt(1000/30)
+  setInterval(async () => {
+    const screenshotBuffer = await page.screenshot({ encoding: 'binary' });
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(screenshotBuffer);
+        }
+    });
+}, [time]); // Capture and send every ~16.67 milliseconds
 	res.send({
 		message: "Successful",
 	});

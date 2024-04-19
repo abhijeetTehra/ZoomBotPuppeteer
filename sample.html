@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Video Stream</title>
+</head>
+<body>
+    <h1>Live Video Feed</h1>
+    <img id="videoFrame" src="" alt="Live Video Frame">
+    <script>
+        const img = document.getElementById('videoFrame');
+
+        // Create WebSocket connection.
+        const socket = new WebSocket('ws://localhost:8080'); // Update with your server's WebSocket URL
+
+        // Set the binary type to 'blob' since we are dealing with binary image data
+        socket.binaryType = 'blob';
+
+        socket.onopen = function(event) {
+            console.log('WebSocket is connected.');
+        };
+
+        // Connection received a message
+        socket.onmessage = function(event) {
+            const blob = event.data;
+            console.log(event.data);
+            const url = URL.createObjectURL(blob);
+            img.src = url;
+        };
+
+        socket.onerror = function(event) {
+            console.error('WebSocket error:', event);
+        };
+
+        socket.onclose = function(event) {
+            console.log('WebSocket is closed now.');
+        };
+    </script>
+</body>
+</html>
