@@ -33,14 +33,18 @@ const startPuppeteerFunction = async (req, res) => {
 		// 	height: 720,
 		// },
     headless: true,
-    protocolTimeout: 50000,
-    timeout: 50000,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--window-size=1920,1080'
+    ],
     ignoreHTTPSErrors: true,
-    args: [`--window-size=1920,1080`],
     defaultViewport: {
-        width: 1920,
-        height: 1080
+      width: 1920,
+      height: 1080
     }
+
 	});
 	const page = await browser.newPage();
 	const ua =
