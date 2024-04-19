@@ -68,6 +68,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 ENV PUPPETEER_SKIP_DOWNLOAD true
 
+ENV DEBUG=puppeteer:*
 
 RUN apt-get update && apt-get install -y \
     build-essential \
