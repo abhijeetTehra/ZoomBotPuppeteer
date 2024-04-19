@@ -1,22 +1,24 @@
 {
-  "name": "zoombotpuppeteer",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@nut-tree/nut-js": "^3.1.2",
-    "axios": "^1.6.8",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "nodemon": "^3.1.0",
-    "puppeteer": "^22.6.5"
-  }
+	"name": "zoombotpuppeteer",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node ./index.js",
+		"dev": "nodemon ./index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@nut-tree/nut-js": "^3.1.2",
+		"axios": "^1.6.8",
+		"dotenv": "^16.4.5",
+		"express": "^4.19.2",
+		"fluent-ffmpeg": "^2.1.2",
+		"locate-chrome": "^0.1.1",
+		"nodemon": "^3.1.0",
+		"puppeteer": "^22.6.5"
+	}
 }
