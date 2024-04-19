@@ -1,5 +1,4 @@
 const puppeteer = require("puppeteer");
-const locateChrome = require("locate-chrome");
 let browser = {
 	close: () => {
 		return "No Browser Instance Running";
@@ -7,15 +6,12 @@ let browser = {
 };
 
 const startPuppeteerFunction = async (req, res) => {
-	const executablePath =
-		(await new Promise((resolve) => locateChrome((arg) => resolve(arg)))) ||
-		"";
 	const { url, meetingId, passcode, name } = req.body;
 	const meetId = meetingId.trim();
 	const meetPassCode = passcode.trim();
 	browser = await puppeteer.launch({
-		executablePath,
-		headless: false,
+		executablePath: "/usr/bin/google-chrome",
+		headless: true,
 		args: [
 			"--disable-notifications",
 			"--enable-automation",
@@ -73,7 +69,10 @@ const deletePuppeteerFunction = async (req, res) => {
 
 const streamCapture = async (req, res) => {
 	const url = "https://aidtaas.com/"; // Replace with your URL
-	browser = await puppeteer.launch({ headless: true });
+	browser = await puppeteer.launch({
+		executablePath: "/usr/bin/google-chrome",
+		headless: true,
+	});
 	const page = await browser.newPage();
 	await page.goto(url);
 

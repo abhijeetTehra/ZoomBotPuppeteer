@@ -61,7 +61,7 @@
 # # Command to run the application
 # CMD [ "npm", "start" ]
 
-FROM node:slim
+FROM node:20
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
@@ -96,7 +96,10 @@ RUN apt-get install -y \
     libswscale-dev \
     libdc1394-dev \
     libgstreamer-plugins-base1.0-dev \
-    libgstreamer1.0-dev 
+    libgstreamer1.0-dev \
+    make \
+    gcc \
+    g++ 
 
 RUN apt-get update && apt list --all-versions chromium
 
@@ -108,7 +111,10 @@ apt-get update && \
 apt-get install google-chrome-stable -y --no-install-recommends && \
 rm -rf /var/lib/apt/lists/*
 
-RUN npx puppeteer browsers install chrome
+# Create a user with name 'app' and group that will be used to run the app
+RUN groupadd -r app && useradd -rm -g app -G audio,video app
+
+# RUN npx puppeteer browsers install chrome
 
 # Update npm to a compatible version
 RUN npm install -g npm@^7
@@ -123,11 +129,20 @@ COPY package.json ./
 # Install npm dependencies
 RUN npm install
 
+RUN npm build
+
 # Copy the rest of the application
 COPY src/ ./
 
 # Expose port
 EXPOSE 4200
+
+# Give app user access to all the project folder
+RUN chown -R app:app /opt/app
+
+RUN chmod -R 777 /opt/app
+
+USER app
 
 # Command to run the application
 CMD [ "npm", "start" ]
