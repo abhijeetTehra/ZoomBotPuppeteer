@@ -17,21 +17,30 @@ const startPuppeteerFunction = async (req, res) => {
 	const meetId = meetingId.trim();
 	const meetPassCode = passcode.trim();
 	browser = await puppeteer.launch({
-		executablePath,
-		headless: true,
-		args: [
-			"--disable-notifications",
-			"--enable-automation",
-			"--start-maximized",
-			// "--use-fake-ui-for-media-stream", // Use fake media stream dialogs
-			"--use-fake-device-for-media-stream", // Use fake device for media stream
-			'--auto-select-desktop-capture-source="Entire screen"', // Automatically select the entire screen in screen sharing
-		],
-		ignoreDefaultArgs: false,
-		defaultViewport: {
-			width: 1280,
-			height: 720,
-		},
+		// executablePath,
+		// headless: true,
+		// args: [
+		// 	"--disable-notifications",
+		// 	"--enable-automation",
+		// 	"--start-maximized",
+		// 	// "--use-fake-ui-for-media-stream", // Use fake media stream dialogs
+		// 	"--use-fake-device-for-media-stream", // Use fake device for media stream
+		// 	'--auto-select-desktop-capture-source="Entire screen"', // Automatically select the entire screen in screen sharing
+		// ],
+		// ignoreDefaultArgs: false,
+		// defaultViewport: {
+		// 	width: 1280,
+		// 	height: 720,
+		// },
+    headless: true,
+    protocolTimeout: 50000,
+    timeout: 50000,
+    ignoreHTTPSErrors: true,
+    args: [`--window-size=1920,1080`],
+    defaultViewport: {
+        width: 1920,
+        height: 1080
+    }
 	});
 	const page = await browser.newPage();
 	const ua =
