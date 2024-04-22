@@ -30,11 +30,11 @@ wss.on("connection", function connection(ws, request, pathname) {
     console.log(`Received message from ${pathname}:`, message);
 	try{
 
-		await pages[pathname].focus("body");
+		await pages[pathname].page.focus("body");
 		// Press Ctrl+M to mute, example of controlling the page
-		await pages[pathname].keyboard.down("ControlLeft");
-		await pages[pathname].keyboard.press("KeyM");
-		await pages[pathname].keyboard.up("ControlLeft");
+		await pages[pathname].page.keyboard.down("ControlLeft");
+		await pages[pathname].page.keyboard.press("KeyM");
+		await pages[pathname].page.keyboard.up("ControlLeft");
 	}catch(e){
 		console.log("PAGE NOT FOUND");
 		console.log(pages);
