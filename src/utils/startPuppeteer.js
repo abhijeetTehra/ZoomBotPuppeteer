@@ -4,7 +4,7 @@ let browser = {
 		return "No Browser Instance Running";
 	},
 };
-const WebSocket = require('ws');
+const WebSocket = require("ws");
 
 const wss = new WebSocket.Server({ port: 8080 });
 
@@ -57,15 +57,15 @@ const startPuppeteerFunction = async (req, res) => {
 	// 	);
 	// 	// console.log(recorder);
 	// }, [1000 / 60]);
-  const time = parseInt(1000/30)
-  setInterval(async () => {
-    const screenshotBuffer = await page.screenshot({ encoding: 'binary' });
-    wss.clients.forEach(function each(client) {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(screenshotBuffer);
-        }
-    });
-}, [time]); // Capture and send every ~16.67 milliseconds
+	const time = parseInt(1000 / 30);
+	setInterval(async () => {
+		const screenshotBuffer = await page.screenshot({ encoding: "binary" });
+		wss.clients.forEach(function each(client) {
+			if (client.readyState === WebSocket.OPEN) {
+				client.send(screenshotBuffer);
+			}
+		});
+	}, [time]); // Capture and send every ~16.67 milliseconds
 	res.send({
 		message: "Successful",
 	});
@@ -99,7 +99,8 @@ const streamCapture = async (req, res) => {
 		"Transfer-Encoding": "chunked",
 	});
 
-	const intervalId = setInterval(sendFrame, 1000); // Adjust interval as needed
+	const time = parseInt(1000 / 30);
+	const intervalId = setInterval(sendFrame, time); // Adjust interval as needed
 
 	req.on("close", () => {
 		console.log("closing");

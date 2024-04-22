@@ -9,31 +9,10 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
-    ffmpeg \
     git \
-    pkgconf \
-    tar \
     unzip \
     wget \
-    gnupg \
-    libjpeg-dev \
-    libpng-dev \
-    libopencv-dev \
-    libtiff-dev \
-    libv4l-dev \
-    libxvidcore-dev \
-    libx264-dev \
-    libavcodec-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libswscale-dev \
-    libdc1394-dev \
-    libgstreamer-plugins-base1.0-dev \
-    libgstreamer1.0-dev \
-    make \
-    gcc \
-    g++ && \
-    rm -rf /var/lib/apt/lists/*
+    gnupg 
 
 # Install Google Chrome Stable
 RUN wget --quiet --output-document=- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/google-archive.gpg && \
@@ -56,13 +35,10 @@ WORKDIR /opt/app
 COPY package*.json ./
 
 # Copy the rest of the application
-COPY src/ ./
+COPY src/ ./src/
 
 # Install npm dependencies
 RUN npm install --force
-
-# Build the application
-#RUN npm run build
 
 # Optimize permissions
 RUN chown -R app:app /opt/app && \

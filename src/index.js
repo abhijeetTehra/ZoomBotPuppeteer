@@ -16,9 +16,7 @@ app.get("/", function (req, res) {
 	});
 });
 
-app.use("/api", streamRouter);
 app.use("/zoom", puppeteerRouter);
-app.use("/", sampleStream);
 
 app.listen(port, () => {
 	console.log(`Server is running at port: ${port}`);
