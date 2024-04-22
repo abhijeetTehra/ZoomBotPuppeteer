@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const chrome = require("chrome-aws-lambda");
 const locateChrome = require("locate-chrome");
 let browser = {
 	close: () => {
@@ -10,9 +11,9 @@ const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 
 const startPuppeteerFunction = async (req, res) => {
-	const executablePath =
-		(await new Promise((resolve) => locateChrome((arg) => resolve(arg)))) ||
-		"";
+	// const executablePath =
+	// 	(await new Promise((resolve) => locateChrome((arg) => resolve(arg)))) ||
+	// 	"";
 	const { url, meetingId, passcode, name } = req.body;
 	const meetId = meetingId.trim();
 	const meetPassCode = passcode.trim();
@@ -32,13 +33,17 @@ const startPuppeteerFunction = async (req, res) => {
 		// 	width: 1280,
 		// 	height: 720,
 		// },
-    headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--window-size=1920,1080'
-    ],
+    headless: chrome.headless,
+	args: chrome.args,
+	executablePath: chrome.executablePath,
+	defaultViewport: chrome.defaultViewport,
+	// headless: true,
+    // args: [
+    //   '--no-sandbox',
+    //   '--disable-setuid-sandbox',
+    //   '--disable-dev-shm-usage',
+    //   '--window-size=1920,1080'
+    // ],
     // executablePath: '/usr/bin/google-chrome',
     // ignoreHTTPSErrors: true,
     // defaultViewport: {
