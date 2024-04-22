@@ -39,11 +39,12 @@ const startPuppeteerFunction = async (req, res) => {
       '--disable-dev-shm-usage',
       '--window-size=1920,1080'
     ],
-    ignoreHTTPSErrors: true,
-    defaultViewport: {
-      width: 1920,
-      height: 1080
-    }
+    // executablePath: '/usr/bin/google-chrome',
+    // ignoreHTTPSErrors: true,
+    // defaultViewport: {
+    //   width: 1920,
+    //   height: 1080
+    // }
 
 	});
 	const page = await browser.newPage();
