@@ -213,7 +213,7 @@ COPY package*.json ./
 COPY src/ ./
 
 # Install npm dependencies
-RUN npm install
+RUN npm install --force
 
 # Build the application
 #RUN npm run build
