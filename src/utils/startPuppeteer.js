@@ -1,6 +1,4 @@
-const puppeteer = require("puppeteer-core");
-const chrome = require("chrome-aws-lambda");
-const locateChrome = require("locate-chrome");
+const puppeteer = require("puppeteer");
 let browser = {
 	close: () => {
 		return "No Browser Instance Running";
@@ -11,46 +9,25 @@ const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 
 const startPuppeteerFunction = async (req, res) => {
-	// const executablePath =
-	// 	(await new Promise((resolve) => locateChrome((arg) => resolve(arg)))) ||
-	// 	"";
 	const { url, meetingId, passcode, name } = req.body;
 	const meetId = meetingId.trim();
 	const meetPassCode = passcode.trim();
 	browser = await puppeteer.launch({
-		// executablePath,
-		// headless: true,
-		// args: [
-		// 	"--disable-notifications",
-		// 	"--enable-automation",
-		// 	"--start-maximized",
-		// 	// "--use-fake-ui-for-media-stream", // Use fake media stream dialogs
-		// 	"--use-fake-device-for-media-stream", // Use fake device for media stream
-		// 	'--auto-select-desktop-capture-source="Entire screen"', // Automatically select the entire screen in screen sharing
-		// ],
-		// ignoreDefaultArgs: false,
-		// defaultViewport: {
-		// 	width: 1280,
-		// 	height: 720,
-		// },
-    headless: chrome.headless,
-	args: chrome.args,
-	executablePath: chrome.executablePath,
-	defaultViewport: chrome.defaultViewport,
-	// headless: true,
-    // args: [
-    //   '--no-sandbox',
-    //   '--disable-setuid-sandbox',
-    //   '--disable-dev-shm-usage',
-    //   '--window-size=1920,1080'
-    // ],
-    // executablePath: '/usr/bin/google-chrome',
-    // ignoreHTTPSErrors: true,
-    // defaultViewport: {
-    //   width: 1920,
-    //   height: 1080
-    // }
-
+		executablePath: "/usr/bin/google-chrome",
+		headless: true,
+		args: [
+			"--disable-notifications",
+			"--enable-automation",
+			"--start-maximized",
+			// "--use-fake-ui-for-media-stream", // Use fake media stream dialogs
+			"--use-fake-device-for-media-stream", // Use fake device for media stream
+			'--auto-select-desktop-capture-source="Entire screen"', // Automatically select the entire screen in screen sharing
+		],
+		ignoreDefaultArgs: false,
+		defaultViewport: {
+			width: 1280,
+			height: 720,
+		},
 	});
 	const page = await browser.newPage();
 	const ua =
@@ -104,7 +81,10 @@ const deletePuppeteerFunction = async (req, res) => {
 
 const streamCapture = async (req, res) => {
 	const url = "https://aidtaas.com/"; // Replace with your URL
-	browser = await puppeteer.launch({ headless: true });
+	browser = await puppeteer.launch({
+		executablePath: "/usr/bin/google-chrome",
+		headless: true,
+	});
 	const page = await browser.newPage();
 	await page.goto(url);
 

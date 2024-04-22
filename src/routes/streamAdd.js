@@ -3,7 +3,6 @@ const ffmpeg = require("fluent-ffmpeg");
 const fs = require("fs");
 const path = require("path");
 const router = require("express").Router();
-const locateChrome = require("locate-chrome");
 
 const MAX_VIDEO_DURATION_SECONDS = 3600; // One hour
 const FPS = 30;
@@ -44,14 +43,9 @@ async function main() {
 	startTime = Date.now();
 	lastFrameTime = startTime;
 
-	const executablePath =
-		(await new Promise((resolve) => locateChrome((arg) => resolve(arg)))) ||
-		"";
-
-	console.log(executablePath, "here");
-
 	const browser = await puppeteer.launch({
-		executablePath,
+		executablePath: "/usr/bin/google-chrome",
+		headless: true,
 	});
 	const page = await browser.newPage();
 
