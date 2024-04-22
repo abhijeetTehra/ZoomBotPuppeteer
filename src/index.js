@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const puppeteerRouter = require("./routes/startPuppeteer");
-const streamRouter = require("./routes/streamRouter");
-const sampleStream = require("./routes/streamAdd");
 
 dotenv.config();
 
@@ -14,8 +12,8 @@ app.use(express.json());
 app.get("/", function (req, res) {
 	// res.sendFile(__dirname + "/index.html");
 	res.send({
-		message: "Welcome to ZoomBot Puppeteer Service"
-	})
+		message: "Welcome to ZoomBot Puppeteer Service",
+	});
 });
 
 app.use("/api", streamRouter);
