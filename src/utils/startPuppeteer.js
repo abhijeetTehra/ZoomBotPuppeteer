@@ -6,8 +6,8 @@ dotenv.config();
 
 const startPuppeteerFunction = async (pages, wss) => {
 
-  const url = process.env.url;
-  const uniqueId = process.env.uniqueId;
+  const url = process.env.URL;
+  const uniqueId = process.env.UNIQUEID;
   const path = uniqueId;
 
   if (pages[path]) {
