@@ -18,7 +18,7 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 let pages = {};
 let upgraded = 0;
-const uniqueId = process.env.uniqueId;
+const uniqueId = process.env.UNIQUEID;
 
 app.get("/", function (req, res) {
 	// res.sendFile(__dirname + "/index.html");

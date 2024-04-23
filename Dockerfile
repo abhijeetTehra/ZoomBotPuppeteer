@@ -3,6 +3,8 @@ FROM node:20
 # Set environment variables
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_SKIP_DOWNLOAD=true \
+    URL=https://mo.aidtaas.com \
+    UNIQUEID=2987348297472389 \
     DEBUG=puppeteer:*
 
 # Install system dependencies
