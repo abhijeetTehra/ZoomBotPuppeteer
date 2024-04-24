@@ -62,7 +62,7 @@ const startPuppeteerFunction = async (pages, wss) => {
 		const interval = setInterval(async () => {
 			if (pages[pathname]) {
 				const screenshotBuffer = await pages[pathname].page.screenshot({
-					encoding: "binary",
+					encoding: "base64",
 				});
 				if (ws.readyState === WebSocket.OPEN) {
 					ws.send(screenshotBuffer);
