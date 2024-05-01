@@ -12,7 +12,6 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@nut-tree/nut-js": "^3.1.2",
 		"axios": "^1.6.8",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",

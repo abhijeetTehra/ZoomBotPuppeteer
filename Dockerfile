@@ -2,14 +2,41 @@ FROM node:20
 
 # Set environment variables
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_SKIP_DOWNLOAD=true \
-    DEBUG=puppeteer:*
+    PUPPETEER_SKIP_DOWNLOAD=true
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#     build-essential \
+#     ca-certificates \
+#     ffmpeg \
+#     git \
+#     pkgconf \
+#     tar \
+#     unzip \
+#     wget \
+#     gnupg \
+#     libjpeg-dev \
+#     libpng-dev \
+#     libopencv-dev \
+#     libtiff-dev \
+#     libv4l-dev \
+#     libxvidcore-dev \
+#     libx264-dev \
+#     libavcodec-dev \
+#     libavformat-dev \
+#     libavutil-dev \
+#     libswscale-dev \
+#     libdc1394-dev \
+#     libgstreamer-plugins-base1.0-dev \
+#     libgstreamer1.0-dev \
+#     make \
+#     gcc \
+#     g++ && \
+#     rm -rf /var/lib/apt/lists/*
+
+    RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
-    ffmpeg \
     git \
     pkgconf \
     tar \
@@ -21,15 +48,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libopencv-dev \
     libtiff-dev \
     libv4l-dev \
-    libxvidcore-dev \
-    libx264-dev \
-    libavcodec-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libswscale-dev \
-    libdc1394-dev \
-    libgstreamer-plugins-base1.0-dev \
-    libgstreamer1.0-dev \
     make \
     gcc \
     g++ && \

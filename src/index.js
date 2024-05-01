@@ -9,7 +9,7 @@ const WebSocket = require("ws");
 
 dotenv.config();
 
-const port = process.env.PORT || 4200;
+const port = 4200;
 
 app.use(express.json());
 app.use(cors());
